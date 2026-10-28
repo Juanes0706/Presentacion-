@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pulso: ¿por qué se van los clientes?</title>
+<style>
+:root{color-scheme:light dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#fff;--tx:#1f2328;--mu:#59636e;--cd:#f3f5f7;--bd:#d8dee4;--o:#e8590c;--y:#f59f00;--b:#1c7ed6;--g:#9aa5b1}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1318;--tx:#e8ebee;--mu:#9aa5b1;--cd:#1a2027;--bd:#2c353f}}
+:root[data-theme="dark"]{--bg:#0f1318;--tx:#e8ebee;--mu:#9aa5b1;--cd:#1a2027;--bd:#2c353f}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+.s{display:none;height:100%;overflow:auto;padding:28px 6vw 70px;flex-direction:column;gap:14px;max-width:1150px;margin:auto}
+.s.on{display:flex}
+.s.on[data-direction="forward"]{animation:slide-forward .45s cubic-bezier(.2,.75,.25,1) both}
+.s.on[data-direction="back"]{animation:slide-back .45s cubic-bezier(.2,.75,.25,1) both}
+.s.on>*{animation:content-in .5s cubic-bezier(.2,.75,.25,1) both;animation-delay:var(--enter-delay,0ms)}
+.s.on .g2>*,.s.on .g3>*,.s.on .row>*{animation:content-in .5s cubic-bezier(.2,.75,.25,1) both}
+.s.on .g2>*:nth-child(2),.s.on .g3>*:nth-child(2),.s.on .row>*:nth-child(2){animation-delay:90ms}
+.s.on .g3>*:nth-child(3),.s.on .row>*:nth-child(3){animation-delay:160ms}
+@keyframes slide-forward{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slide-back{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:translateX(0)}}
+@keyframes content-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.c{transition:transform .22s ease,box-shadow .22s ease}
+.c:hover{transform:translateY(-2px);box-shadow:0 7px 18px #1f23281a}
+.chart-tools{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap;margin:9px 0 4px;font-size:12px;color:var(--mu)}
+.chart-tools label{display:flex;align-items:center;gap:6px}
+.chart-tools select,.chart-tools button{min-height:32px;border:1px solid var(--bd);border-radius:6px;padding:4px 8px;background:var(--bg);color:var(--tx);font:inherit}
+.chart-tools select:focus-visible,.chart-tools button:focus-visible,.chart-tools input:focus-visible{outline:2px solid var(--b);outline-offset:2px}
+.chart-series{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.chart-series label{gap:4px;color:var(--tx)}
+.chart-series input{accent-color:var(--o);margin:0}
+.chart-tools button{cursor:pointer;transition:background-color .18s ease,transform .18s ease}
+.chart-tools button:hover{background:var(--cd);transform:translateY(-1px)}
+.chart-animate rect{transform-box:fill-box;transform-origin:center bottom;animation:bar-grow .7s cubic-bezier(.2,.75,.25,1) both}
+.chart-animate polyline{stroke-dasharray:1000 1000;stroke-dashoffset:1000;animation:line-draw 1.1s ease-out both}
+.chart-animate circle{transform-box:fill-box;transform-origin:center;animation:dot-in .35s ease-out both}
+@keyframes bar-grow{from{transform:scaleY(.04);opacity:.35}to{transform:scaleY(1);opacity:1}}
+@keyframes line-draw{to{stroke-dashoffset:0}}
+@keyframes dot-in{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+h1{font-size:clamp(26px,4.4vw,44px);margin:0;line-height:1.1}h2{font-size:clamp(20px,2.7vw,28px);margin:0;line-height:1.2}
+.k{color:var(--o);font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.mu{color:var(--mu)}.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:760px){.g2,.g3{grid-template-columns:1fr}}
+.c{background:var(--cd);border:1px solid var(--bd);border-radius:12px;padding:12px 14px}
+.m{font-size:28px;font-weight:700;line-height:1.1}.m small{display:block;font-size:12px;font-weight:400;color:var(--mu);margin-top:3px}
+.row{display:flex;flex-wrap:wrap;gap:10px}.row>.c{flex:1;min-width:130px}
+svg{width:100%;height:auto;touch-action:pan-y}svg text{fill:var(--mu);font-size:11px}svg .t{fill:var(--tx);font-weight:700}
+svg rect[tabindex="0"],svg circle[tabindex="0"]{cursor:pointer;transition:filter .15s ease,stroke-width .15s ease}
+svg rect[tabindex="0"]:hover,svg rect[tabindex="0"]:focus-visible,svg circle[tabindex="0"]:hover,svg circle[tabindex="0"]:focus-visible{filter:brightness(.82);stroke:var(--tx);stroke-width:2;outline:none}
+.lg{font-size:12px;color:var(--mu);display:flex;gap:12px;flex-wrap:wrap}.lg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px}
+.o{color:var(--o)}.y{color:var(--y)}.b{color:var(--b)}
+.fl{display:flex;flex-direction:column;align-items:stretch;gap:6px}.fl .ar{text-align:center;color:var(--mu);line-height:1}
+.bx{border:1px solid var(--bd);border-radius:10px;padding:9px 12px;text-align:center;background:var(--cd)}.bx b{display:block}.bx span{font-size:12px;color:var(--mu)}
+.bx.a{border-color:var(--b)}.bx.r{border-color:var(--o)}
+.bar{display:flex;height:26px;border-radius:6px;overflow:hidden;font-size:12px;color:#fff;font-weight:700}.bar div{display:flex;align-items:center;justify-content:center}
+q{display:block;font-style:italic;margin:4px 0}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;align-items:center;gap:14px;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--bd)}
+nav button{background:var(--cd);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:6px 16px;font-size:15px;cursor:pointer;transition:transform .18s ease,background-color .18s ease}
+nav button:hover{transform:translateY(-2px);background:var(--bd)}
+nav button:active{transform:scale(.94)}
+@media(max-width:600px){.s{padding:20px 5vw 74px}.chart-tools{align-items:flex-start}.chart-series{width:100%}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+</style></head><body>
+
+<section class="s on">
+<div class="k">Caso práctico · Keyrus</div>
+<h1>¿Por qué se van los clientes de Pulso?</h1>
+<p class="mu" style="margin:0">Pulso es una app colombiana de entrenamiento en casa por suscripción. Cada mes cancelan más clientes y el equipo no se pone de acuerdo en la razón.</p>
+<div class="g3">
+<div class="c"><b>Plan Mensual</b><div class="m">$29.900<small>al mes</small></div></div>
+<div class="c"><b>Plan Anual</b><div class="m">$19.900<small>equivalente al mes</small></div></div>
+<div class="c"><b>Promo 3 meses</b><div class="m">$9.900 → $29.900<small>el precio se triplica al día 90</small></div></div></div>
+<div class="g3">
+<div class="c"><b>Mercadeo</b><br><span class="mu">“Es el precio”</span></div>
+<div class="c"><b>Producto</b><br><span class="mu">“Es la competencia”</span></div>
+<div class="c"><b>Soporte</b><br><span class="mu">“Pierden el interés”</span></div></div>
+<div class="row"><div class="c"><div class="m">300<small>clientes (muestra, corte 30-sep-2026)</small></div></div>
+<div class="c"><div class="m o">34%<small>cancelados (102)</small></div></div>
+<div class="c"><div class="m">63<small>comentarios de 5 canales</small></div></div></div>
+</section>
+
+<section class="s">
+<div class="k">Problemática del dataset</div>
+<h2>Los archivos venían tal como se exportaron: 9 problemas antes de poder confiar en ellos</h2>
+<div class="row">
+<div class="c"><div class="m">306 → 300<small>filas: 6 duplicados exactos</small></div></div>
+<div class="c"><div class="m">12 → 5<small>variantes de ciudad (BOGOTA, Bogotá D.C., …)</small></div></div>
+<div class="c"><div class="m">5 → 2<small>escrituras de estado (Cancelada, CANCELADO, …)</small></div></div></div>
+<div class="row">
+<div class="c"><div class="m o">4<small>“Activos” con fecha de cancelación</small></div></div>
+<div class="c"><div class="m o">3<small>cancelaciones anteriores al registro</small></div></div>
+<div class="c"><div class="m o">2<small>sesiones posteriores al corte (hasta 2027)</small></div></div></div>
+<div class="row">
+<div class="c"><div class="m y">4<small>edades imposibles (0 y 199)</small></div></div>
+<div class="c"><div class="m y">412<small>sesiones en 30 días (el siguiente es 16)</small></div></div>
+<div class="c"><div class="m y">55%<small>de NPS vacío (encuesta voluntaria)</small></div></div></div>
+<p class="mu" style="margin:0">Criterio: no se borran filas por un error en un solo campo; se marcan con una bandera y se excluyen solo del cálculo que afectan. El NPS no se imputó porque quien no responde no es aleatorio.</p>
+<p class="mu" style="margin:0">Además: “Promo 3 meses” venía como canal de adquisición, no como plan.</p>
+</section>
+
+<section class="s">
+<div class="k">Lo realizado · decisiones clave</div>
+<h2>Siete decisiones que cambiaron las conclusiones</h2>
+<div class="g3">
+<div class="c"><b>Cancelados: 102 → 98 → 102</b><br><span class="mu">Al quitar duplicados bajaron a 98. Los 4 “activos” con fecha tenían 0 sesiones: se reclasificaron y se probó que la conclusión no cambia sin ellos.</span></div>
+<div class="c"><b>Precio de la promo validado</b><br><span class="mu">Los clientes a $9.900 tienen hasta 85 días; los de $29.900, desde 91. El cambio ocurre al día 90.</span></div>
+<div class="c"><b>Variable circular descartada</b><br><span class="mu">Las sesiones de los últimos 30 días son casi 0 en los cancelados por construcción. Tickets es un acumulado: no es efecto del soporte.</span></div>
+<div class="c"><b>Ventana de 60 días</b><br><span class="mu">Solo clientes con 60 días o más desde el registro (274), para que todos hayan tenido la misma oportunidad de cancelar.</span></div>
+<div class="c"><b>Tasa, no conteo</b><br><span class="mu">Más cancelaciones puede ser solo una base más grande. Se calculó la tasa sobre clientes en riesgo, con iOS como grupo de control.</span></div>
+<div class="c"><b>Se corrigió a la IA</b><br><span class="mu">Concluyó que la promo empeoró (≈35% vs 58%). Por cohorte: 52% vs 45%. Era volumen de registros, no deterioro.</span></div>
+</div>
+<div class="c"><b>Comentarios depurados:</b> 63 → 59 (2 duplicados, 1 spam, 1 ajeno al servicio). K048 tiene 5 estrellas pero es una queja con sarcasmo: se clasificó por contenido, no por estrellas.</div>
+</section>
+
+<section class="s">
+<div class="k">Hallazgo 1 · dónde se rompe</div>
+<h2>Dos picos: antes del día 60 en todos los canales y justo después del día 90 en la promo</h2>
+<div class="g2">
+<div class="c"><b>Cancelaciones por días desde el registro</b><svg id="c1" viewBox="0 0 420 230"></svg>
+<div class="lg"><span><i style="background:var(--g)"></i>Otros canales</span><span><i style="background:var(--y)"></i>Promo 3 meses</span></div></div>
+<div class="c"><b>Cancela en sus primeros 60 días</b><svg id="c2" viewBox="0 0 420 230"></svg>
+<div class="lg"><span>El 89% de las cancelaciones tempranas (34 de 38) no completó el onboarding</span></div></div></div>
+<div class="row"><div class="c"><div class="m">59%<small>de las cancelaciones, en los primeros 90 días</small></div></div>
+<div class="c"><div class="m y">23 de 26<small>cancelaciones entre los días 91 y 120 son de promo</small></div></div>
+<div class="c"><div class="m o">35% vs 2%<small>sin onboarding vs con onboarding</small></div></div></div>
+</section>
+
+<section class="s">
+<div class="k">Hallazgo 2 · lo que cambió en julio</div>
+<h2>La tasa de Android se duplicó desde julio; la de iOS se mantuvo</h2>
+<div class="g2">
+<div class="c"><b>% de clientes en riesgo que cancela en el mes</b><svg id="c3" viewBox="0 0 420 240"></svg>
+<div class="lg"><span><i style="background:var(--b)"></i>Android</span><span><i style="background:var(--g)"></i>iOS</span></div></div>
+<div class="row" style="align-content:flex-start">
+<div class="c"><div class="m b">5,2% → 11,2%<small>Android, enero-junio vs julio-septiembre</small></div></div>
+<div class="c"><div class="m">4,5% → 3,4%<small>iOS (grupo de control)</small></div></div>
+<div class="c"><div class="m">37 vs 17<small>cancelaciones de Android vistas vs esperadas (jul-sep)</small></div></div>
+<div class="c"><div class="m">13 de 13<small>comentarios técnicos son posteriores al 1 de julio</small></div></div></div></div>
+<p class="mu" style="margin:0">Samsung, Xiaomi, Motorola y Android 13; dos clientes dicen que en iPhone funciona bien. Es una asociación fuerte, no una prueba: falta el historial de versiones.</p>
+</section>
+
+<section class="s">
+<div class="k">Hallazgo 3 · atribución</div>
+<h2>Tres causas, ninguna es la competencia; el ritmo de cancelación se multiplicó por 2,5</h2>
+<div class="g2">
+<div class="c"><b>Cancelaciones por mes, según causa</b><svg id="c4" viewBox="0 0 420 240"></svg>
+<div class="lg"><span><i style="background:var(--o)"></i>Onboarding</span><span><i style="background:var(--y)"></i>Fin de promo</span><span><i style="background:var(--b)"></i>Android</span><span><i style="background:var(--g)"></i>Otros</span></div></div>
+<div class="c"><b>Ingreso mensual perdido por causa</b>
+<div class="bar" style="margin:10px 0"><div style="width:41%;background:var(--o)">41%</div><div style="width:33%;background:var(--y)">33%</div><div style="width:22%;background:var(--b)">22%</div><div style="width:4%;background:var(--g)"></div></div>
+<div class="row"><div class="c"><div class="m">6,4 → 16<small>cancelaciones por mes</small></div></div><div class="c"><div class="m">×2,6<small>ritmo de ingreso perdido desde julio</small></div></div></div>
+<p class="mu" style="margin:8px 0 0">Antes de julio dominaba el onboarding. Desde julio se suman la promo y Android (42% de las cancelaciones).</p></div></div>
+</section>
+
+<section class="s">
+<div class="k">Voz del cliente</div>
+<h2>Los comentarios explican el porqué: falla técnica, precio sin aviso y onboarding</h2>
+<div class="g2">
+<div class="c"><b>59 comentarios útiles, por categoría con problema</b><svg id="c5" viewBox="0 0 420 230"></svg></div>
+<div class="c">
+<q><span class="y">Precio:</span> “Me cobraron $29.900 y yo venía pagando $9.900. Nadie me avisó.”</q>
+<q><span class="o">Onboarding:</span> “La primera clase que me salió era avanzada y no pude seguirla. No volví.”</q>
+<q><span class="b">Técnica:</span> “En iPhone funciona normal, a mí en Xiaomi se me cierra siempre.”</q>
+<q>“Quise pausar la suscripción y no existe esa opción. Tocó cancelar.”</q>
+<p class="mu" style="margin:6px 0 0">Ningún comentario menciona una app competidora. Con 59 comentarios sirven para explicar, no para medir porcentajes.</p></div></div>
+</section>
+
+<section class="s">
+<div class="k">Solución · acciones</div>
+<h2>Tres acciones priorizadas, cada una con KPI, meta y forma de medirla</h2>
+<div class="g3">
+<div class="c" style="border-color:var(--b)"><span class="b"><b>1 · Corregir Android</b></span><p class="mu" style="margin:6px 0">Reproducir la falla, publicar la corrección y compensar a los afectados.</p><div class="m">11% → 5%<small>tasa mensual de Android · iOS como control</small></div></div>
+<div class="c" style="border-color:var(--o)"><span class="o"><b>2 · Rediseñar el onboarding</b></span><p class="mu" style="margin:6px 0">Test más corto, plan guiado automático y recordatorios en los días 1, 3 y 7.</p><div class="m">65% → 75%<small>completa el onboarding · prueba A/B de 6-8 semanas</small></div></div>
+<div class="c" style="border-color:var(--y)"><span class="y"><b>3 · Avisar el cambio de precio</b></span><p class="mu" style="margin:6px 0">Avisos en los días 60, 75 y 85; plan intermedio y opción de pausar.</p><div class="m">50% → 35%<small>cancela en los 30 días tras el cobro · A/B por cohorte</small></div></div></div>
+<div class="row"><div class="c"><div class="m">9 menos<small>cancelaciones tempranas si el 35% sin onboarding baja a 25% (límite superior)</small></div></div>
+<div class="c"><div class="m">No bajar el precio<small>el precio solo pesa en la promo: el problema es el salto sin aviso</small></div></div></div>
+</section>
+
+<section class="s">
+<div class="k">IA a futuro · arquitectura propuesta</div>
+<h2>Detectar el problema en semanas, no en meses</h2>
+<div class="g2">
+<div class="fl">
+<div class="g3"><div class="bx"><b>Clientes y pagos</b></div><div class="bx"><b>Eventos de la app</b></div><div class="bx"><b>Comentarios</b></div></div>
+<div class="ar">↓</div>
+<div class="bx a"><b>Ingesta y calidad de datos</b><span>validación, normalización, deduplicación (los 9 problemas de este caso)</span></div>
+<div class="ar">↓</div>
+<div class="bx"><b>Capa analítica de clientes</b><span>segmentos, eventos, historial de uso y cancelaciones</span></div>
+<div class="ar">↓</div>
+<div class="g2"><div class="bx"><b>IA sobre comentarios</b><span>un LLM clasifica motivos y detecta tendencias (sarcasmo, spam)</span></div>
+<div class="bx"><b>Alertas de riesgo</b><span>onboarding al día 3-7, tasa por dispositivo y versión, aviso al día 60 de la promo</span></div></div>
+<div class="ar">↓</div>
+<div class="bx a"><b>Acciones de retención y medición</b><span>CRM, soporte, producto, experimentos A/B y evaluación de resultados</span></div></div>
+<div class="c"><b>Qué habría detectado ya</b>
+<div class="row" style="margin-top:8px"><div class="c"><div class="m b">Jul-2026<small>la alerta por dispositivo salta: Android 16,2% vs umbral 9,4%</small></div></div>
+<div class="c"><div class="m o">Día 30<small>clientes sin onboarding y con 0-3 sesiones entran a la lista de riesgo</small></div></div></div>
+<p class="mu" style="margin:10px 0 0">Se mide el propio sistema: tiempo de detección, precisión de las alertas y efecto en retención (grupo contactado vs no contactado).</p>
+<p class="mu" style="margin:6px 0 0"><b>Empezar con reglas interpretables</b> y clasificación asistida por IA; el modelo de predicción cuando haya más historial de comportamiento.</p></div></div>
+</section>
+
+<section class="s">
+<div class="k">Prototipo · regresión logística</div>
+<h2>El modelo prioriza bien, pero una regla simple ya capta casi todo</h2>
+<div class="g2">
+<div class="c"><b>Cancelación observada (días 31-60) por nivel de riesgo</b><svg id="c6" viewBox="0 0 420 230"></svg>
+<div class="lg"><span>Validación cruzada de 5 particiones · 266 clientes, 30 cancelaciones</span></div></div>
+<div class="row" style="align-content:flex-start">
+<div class="c"><div class="m b">0,86<small>AUC del modelo</small></div></div>
+<div class="c"><div class="m o">0,82<small>AUC de la regla “sin onboarding”</small></div></div>
+<div class="c"><div class="m">70%<small>de las cancelaciones, contactando al 20% de mayor riesgo (precisión 40% vs 11% base)</small></div></div>
+<div class="c"><div class="m">90%<small>de las cancelaciones marca la regla simple (34% de los clientes)</small></div></div></div></div>
+<p class="mu" style="margin:0">Se predice entre el día 31 y el 60 para no contaminar el uso del primer mes. Con 30 casos es una demostración: el siguiente paso es sumar sesiones de los días 3, 7 y 14 y validar con A/B.</p>
+<p class="mu" style="margin:0"><b>Preguntas para la gerente:</b> ¿qué cambió en la app en julio? · ¿cambió la campaña de promo (registros: 1 en julio, 7 en agosto)? · ¿se avisa antes del primer cobro completo?</p>
+</section>
+
+<section class="s">
+<div class="k">Conclusiones</div>
+<h2>Los clientes no se van por la competencia ni por perder el interés: se van por tres fallas de la experiencia</h2>
+<div class="g3">
+<div class="c" style="border-color:var(--o)"><span class="o"><b>1 · Onboarding fallido</b></span><div class="m">46%<small>de las cancelaciones · 41% del ingreso perdido</small></div><p class="mu" style="margin:6px 0 0">Cancela el 35% de quienes no lo completan frente al 2% de quienes sí. Es el problema estructural.</p></div>
+<div class="c" style="border-color:var(--y)"><span class="y"><b>2 · Fin de la promo sin aviso</b></span><div class="m">28%<small>de las cancelaciones · 33% del ingreso perdido</small></div><p class="mu" style="margin:6px 0 0">La mitad de los clientes de promo (21 de 42) cancela en los 30 días siguientes al salto de $9.900 a $29.900.</p></div>
+<div class="c" style="border-color:var(--b)"><span class="b"><b>3 · Falla técnica en Android</b></span><div class="m">≥22%<small>de las cancelaciones · 22% del ingreso perdido</small></div><p class="mu" style="margin:6px 0 0">La tasa mensual pasa de 5,2% a 11,2% desde julio y la de iOS se mantiene. Explica el aumento reciente.</p></div></div>
+<div class="g3">
+<div class="c"><b>Mercadeo: parcialmente cierto</b><br><span class="mu">El precio solo pesa en la promo, y el problema es el salto sin aviso, no el precio en sí.</span></div>
+<div class="c"><b>Producto: sin respaldo</b><br><span class="mu">Ninguno de los 59 comentarios útiles menciona una app competidora.</span></div>
+<div class="c"><b>Soporte: es consecuencia</b><br><span class="mu">La pérdida de interés aparece en 2 comentarios y sigue a un onboarding fallido; no es una causa independiente.</span></div></div>
+<div class="row">
+<div class="c"><div class="m">3 momentos<small>donde se rompe: primeros días, día 90 y, desde julio, el uso en Android</small></div></div>
+<div class="c"><div class="m">×2,5<small>el ritmo de cancelación desde julio (6,4 → 16 por mes)</small></div></div>
+<div class="c"><div class="m">1.º Android<small>luego onboarding y aviso de la promo, cada uno con KPI y prueba A/B</small></div></div></div>
+<p class="mu" style="margin:0"><b>Límites:</b> muestra de 300 clientes (sirve para comparar causas, no para estimar la pérdida total); las asociaciones no prueban causalidad y la falla de Android necesita el historial de versiones; el modelo de riesgo es una demostración con 30 cancelaciones.</p>
+</section>
+
+<nav><button id="p" aria-label="Anterior">←</button><span id="n" class="mu"></span><button id="x" aria-label="Siguiente">→</button></nav>
+
+<script>
+const V=s=>getComputedStyle(document.documentElement).getPropertyValue(s).trim();
+function animateChart(el){el.classList.remove('chart-animate');void el.offsetWidth;el.classList.add('chart-animate')}
+function addChartTools(chart){const tools=document.createElement('div');tools.className='chart-tools';
+const addSelect=(name,options,value,onChange)=>{const label=document.createElement('label');label.append(document.createTextNode(name));const select=document.createElement('select');select.setAttribute('aria-label',name);options.forEach(([text,key])=>{const option=document.createElement('option');option.textContent=text;option.value=key;select.append(option)});select.value=value;select.addEventListener('change',()=>onChange(select.value));label.append(select);tools.append(label);return select};
+if(chart.type==='bars')chart.categorySelect=addSelect('Categoría',[['Todas','all'],...chart.labels.map((label,index)=>[label,String(index)])],'all',value=>{chart.category=value==='all'?null:Number(value);renderBars(chart)});
+else{chart.fromSelect=addSelect('Desde',chart.labels.map((label,index)=>[label,String(index)]),'0',value=>{chart.from=Number(value);if(chart.from>chart.to){chart.to=chart.from;chart.toSelect.value=String(chart.to)}renderLine(chart)});chart.toSelect=addSelect('Hasta',chart.labels.map((label,index)=>[label,String(index)]),String(chart.to),value=>{chart.to=Number(value);if(chart.to<chart.from){chart.from=chart.to;chart.fromSelect.value=String(chart.from)}renderLine(chart)})}
+if(chart.series.length>1){const group=document.createElement('div');group.className='chart-series';const title=document.createElement('span');title.textContent='Series';group.append(title);chart.series.forEach((series,index)=>{const label=document.createElement('label'),input=document.createElement('input');input.type='checkbox';input.checked=true;input.addEventListener('change',()=>{if(!input.checked&&chart.series.length-chart.hidden.size===1){input.checked=true;return}if(input.checked)chart.hidden.delete(index);else chart.hidden.add(index);chart.type==='bars'?renderBars(chart):renderLine(chart)});label.append(input,document.createTextNode(series.name||chart.options.series[index]));group.append(label)});tools.append(group)}
+const reset=document.createElement('button');reset.type='button';reset.textContent='Restablecer';reset.addEventListener('click',()=>{chart.category=null;chart.from=0;chart.to=chart.labels.length-1;chart.hidden.clear();if(chart.categorySelect)chart.categorySelect.value='all';if(chart.fromSelect)chart.fromSelect.value='0';if(chart.toSelect)chart.toSelect.value=String(chart.to);tools.querySelectorAll('input[type="checkbox"]').forEach(input=>input.checked=true);chart.type==='bars'?renderBars(chart):renderLine(chart)});tools.append(reset);chart.el.before(tools)}
+function bars(id,labels,series,options={}){const chart={id,el:document.getElementById(id),type:'bars',labels,series,options,category:null,hidden:new Set()};renderBars(chart);addChartTools(chart)}
+function renderBars(chart){const {el,labels,series,options:o}=chart,W=420,H=o.h||230,p=28,indices=chart.category===null?labels.map((_,index)=>index):[chart.category],visible=series.map((item,index)=>({item,index})).filter(({index})=>!chart.hidden.has(index)),totals=indices.map(index=>visible.reduce((sum,{item})=>sum+item.d[index],0)),max=Math.max(1,...totals)*1.15,bw=(W-2*p)/indices.length;let h='';
+indices.forEach((originalIndex,position)=>{let y=H-p;visible.forEach(({item,index})=>{const value=item.d[originalIndex],height=value/max*(H-2*p-6);y-=height;const displayed=o.lab&&series.length===1?o.lab[originalIndex]:`${value}${o.unit||''}`,seriesName=o.series?.[index],tip=seriesName?`${labels[originalIndex]} · ${seriesName}: ${displayed}`:`${labels[originalIndex]}: ${displayed}`;h+=`<rect x="${p+position*bw+bw*.14}" y="${y}" width="${bw*.72}" height="${height}" fill="${o.cols?o.cols[originalIndex]:item.c}" rx="3" tabindex="0" role="img" aria-label="${tip}"><title>${tip}</title></rect>`});
+h+=`<text x="${p+position*bw+bw/2}" y="${H-10}" text-anchor="middle">${labels[originalIndex]}</text><text class="t" x="${p+position*bw+bw/2}" y="${y-4}" text-anchor="middle">${o.lab?o.lab[originalIndex]:Math.round(totals[position]*10)/10}</text>`});
+el.innerHTML=h+`<line x1="${p}" x2="${W-p}" y1="${H-p}" y2="${H-p}" stroke="${V('--bd')}"/>`;animateChart(el)}
+function line(id,labels,series,mark){const chart={id,el:document.getElementById(id),type:'line',labels,series,mark,from:0,to:labels.length-1,hidden:new Set()};renderLine(chart);addChartTools(chart)}
+function renderLine(chart){const {el,labels,series,mark}=chart,W=420,H=240,p=30,max=18,indices=labels.map((_,index)=>index).filter(index=>index>=chart.from&&index<=chart.to),visible=series.filter((_,index)=>!chart.hidden.has(index)),X=index=>p+(indices.length>1?index*(W-2*p)/(indices.length-1):0),Y=value=>H-p-value/max*(H-2*p);let h='';
+[0,5,10,15].forEach(t=>h+=`<line x1="${p}" x2="${W-p}" y1="${Y(t)}" y2="${Y(t)}" stroke="${V('--bd')}"/><text x="4" y="${Y(t)+4}">${t}%</text>`);
+indices.forEach((originalIndex,index)=>h+=`<text x="${X(index)}" y="${H-10}" text-anchor="middle">${labels[originalIndex]}</text>`);
+const markIndex=indices.indexOf(mark);if(markIndex>=0)h+=`<line x1="${X(markIndex)}" x2="${X(markIndex)}" y1="${p-8}" y2="${H-p}" stroke="${V('--mu')}" stroke-dasharray="4"/><text x="${X(markIndex)+3}" y="${p}">Julio</text>`;
+visible.forEach(seriesItem=>{const values=indices.map(index=>seriesItem.d[index]);if(values.length>1)h+=`<polyline fill="none" stroke="${seriesItem.c}" stroke-width="3" points="${values.map((value,index)=>X(index)+','+Y(value)).join(' ')}"/>`;h+=values.map((value,index)=>{const tip=`${labels[indices[index]]} · ${seriesItem.name}: ${value}%`;return `<circle cx="${X(index)}" cy="${Y(value)}" r="3.5" fill="${seriesItem.c}" tabindex="0" role="img" aria-label="${tip}"><title>${tip}</title></circle>`}).join('')});el.innerHTML=h;animateChart(el)}
+const O='#e8590c',Y='#f59f00',B='#1c7ed6',G='#9aa5b1';
+bars('c1',['0-30','31-60','61-90','91-120','121-180','181-365'],[{c:G,d:[9,21,9,3,6,4]},{c:Y,d:[4,9,6,23,4,1]}],{series:['Otros canales','Promo 3 meses']});
+bars('c2',['Sin onboarding','Con onboarding'],[{c:O,d:[35,2]}],{cols:[O,G],lab:['35% (n=97)','2% (n=177)']});
+line('c3',['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep'],[{c:B,name:'Android',d:[7.1,4.8,7.7,6.6,3.9,2.7,16.2,6.4,10.7]},{c:G,name:'iOS',d:[2.4,5.9,8.6,1.4,4.9,4.2,4.8,3.6,1.9]}],6);
+bars('c4',['Antes de julio','Desde julio'],[{c:O,d:[4.4,3.7]},{c:Y,d:[1.6,5]},{c:B,d:[0.3,6.7]},{c:G,d:[0.1,0.7]}],{series:['Onboarding','Fin de promo','Android','Otros']});
+bars('c5',['Técnica','Precio','Onboard.','Cancelar','Interés','Soporte'],[{c:B,d:[13,10,8,7,2,1]}],{cols:[B,Y,O,G,G,G]});
+bars('c6',['Riesgo bajo','Riesgo medio','Riesgo alto'],[{c:O,d:[0,5,29]}],{cols:[G,Y,O],lab:['0% (0 de 89)','5% (4 de 88)','29% (26 de 89)']});
+const S=[...document.querySelectorAll('.s')];let i=-1;
+function go(k){const next=Math.max(0,Math.min(S.length-1,k));if(next===i)return;const direction=next>i?'forward':'back';i=next;S.forEach((s,j)=>{const active=j===i;if(active){s.classList.remove('on');s.dataset.direction=direction;void s.offsetWidth;s.classList.add('on');s.scrollTop=0;s.querySelectorAll(':scope > *').forEach((el,index)=>el.style.setProperty('--enter-delay',`${index*55}ms`));requestAnimationFrame(()=>s.querySelectorAll('svg').forEach(animateChart))}else{s.classList.remove('on');s.querySelectorAll('svg').forEach(svg=>svg.classList.remove('chart-animate'))}});document.getElementById('n').textContent=(i+1)+' / '+S.length}
+document.getElementById('p').onclick=()=>go(i-1);document.getElementById('x').onclick=()=>go(i+1);
+addEventListener('keydown',e=>{if(e.target.closest('button,select,input,textarea'))return;if(e.key==='ArrowRight'||e.key===' ')go(i+1);if(e.key==='ArrowLeft')go(i-1)});
+let swipeStart=null;S.forEach(section=>{section.addEventListener('pointerdown',e=>{if(e.target.closest('button,select,input,svg'))return;swipeStart={x:e.clientX,y:e.clientY}});section.addEventListener('pointerup',e=>{if(!swipeStart)return;const dx=e.clientX-swipeStart.x,dy=e.clientY-swipeStart.y;swipeStart=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy))go(i+(dx<0?1:-1))});section.addEventListener('pointercancel',()=>{swipeStart=null})});go(0);
+</script></body></html>
