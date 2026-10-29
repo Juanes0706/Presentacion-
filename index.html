@@ -164,6 +164,34 @@ nav button:active{transform:scale(.94)}
 </section>
 
 <section class="s">
+<div class="k">Voz del cliente · nube de palabras</div>
+<h2>Las palabras más repetidas apuntan a los mismos quiebres que muestran los datos</h2>
+<div class="g2">
+<div class="c" style="background:#fff;padding:8px"><img src="nube_palabras.png" alt="Nube de palabras con los conceptos clave de los comentarios de clientes" style="width:100%;height:auto;display:block;border-radius:8px"></div>
+<div style="display:flex;flex-direction:column;gap:10px">
+
+<div class="c"><b>Sentimiento: predominan los problemas</b>
+<div class="bar" style="margin:8px 0"><div style="width:70%;background:var(--o)">70%</div><div style="width:20%;background:var(--b)">20%</div><div style="width:10%;background:var(--g)">10%</div></div>
+<div class="lg"><span><i style="background:var(--o)"></i>Reporta un problema (41)</span><span><i style="background:var(--b)"></i>Positivo (12)</span><span><i style="background:var(--g)"></i>Pide funciones (6)</span></div></div>
+
+<div class="c"><b>Puntos de quiebre en las palabras</b>
+<p class="mu" style="margin:6px 0 0"><span class="b"><b>Falla técnica:</b></span> cierra, carga, actualización, video<br>
+<span class="y"><b>Precio sin aviso:</b></span> precio, cobro, cobraron, promoción, aviso, tarjeta<br>
+<span class="o"><b>Onboarding:</b></span> guiado, empezar, rutina, nunca, ninguna<br>
+<b>Cancelar:</b> cancelar, cancelé, pausar, opción, soporte</p></div>
+
+<div class="c"><b>Clasificación de motivos (59 comentarios útiles)</b>
+<div class="row" style="margin-top:8px;gap:8px">
+<div class="c"><div class="m b">13<small>técnica</small></div></div>
+<div class="c"><div class="m y">10<small>precio y promo</small></div></div>
+<div class="c"><div class="m o">8<small>onboarding</small></div></div>
+<div class="c"><div class="m">7<small>cancelar y pausar</small></div></div></div></div>
+
+</div></div>
+<p class="mu" style="margin:0">“Clase” y “app” dominan porque describen el producto; el mensaje está en las palabras que las acompañan. El tamaño indica frecuencia en una muestra pequeña (63 comentarios): sirve para explicar los motivos, no para medir porcentajes de la base.</p>
+</section>
+
+<section class="s">
 <div class="k">Solución · acciones</div>
 <h2>Tres acciones priorizadas, cada una con KPI, meta y forma de medirla</h2>
 <div class="g3">
@@ -227,6 +255,7 @@ nav button:active{transform:scale(.94)}
 <div class="c"><div class="m">×2,5<small>el ritmo de cancelación desde julio (6,4 → 16 por mes)</small></div></div>
 <div class="c"><div class="m">1.º Android<small>luego onboarding y aviso de la promo, cada uno con KPI y prueba A/B</small></div></div></div>
 <p class="mu" style="margin:0"><b>Límites:</b> muestra de 300 clientes (sirve para comparar causas, no para estimar la pérdida total); las asociaciones no prueban causalidad y la falla de Android necesita el historial de versiones; el modelo de riesgo es una demostración con 30 cancelaciones.</p>
+<p class="mu" style="margin:0">El procesamiento y análisis de los datos se realizó en <a class="b" href="https://colab.research.google.com/drive/1XJzUpCB2Fh9A5ra_sqxgSbqHh4IxQNeJ?usp=sharing" target="_blank" rel="noopener noreferrer">este notebook de Google Colab</a>.</p>
 </section>
 
 <nav><button id="p" aria-label="Anterior">←</button><span id="n" class="mu"></span><button id="x" aria-label="Siguiente">→</button></nav>
