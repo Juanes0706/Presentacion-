@@ -52,6 +52,12 @@ svg rect[tabindex="0"]:hover,svg rect[tabindex="0"]:focus-visible,svg circle[tab
 .bx{border:1px solid var(--bd);border-radius:10px;padding:9px 12px;text-align:center;background:var(--cd)}.bx b{display:block}.bx span{font-size:12px;color:var(--mu)}
 .bx.a{border-color:var(--b)}.bx.r{border-color:var(--o)}
 .bar{display:flex;height:26px;border-radius:6px;overflow:hidden;font-size:12px;color:#fff;font-weight:700}.bar div{display:flex;align-items:center;justify-content:center}
+table{width:100%;border-collapse:collapse;margin:8px 0;font-size:12px}
+th,td{padding:7px 5px;border-bottom:1px solid var(--bd);text-align:right;white-space:nowrap}
+th{color:var(--mu);font-weight:600}
+th:first-child,td:first-child{text-align:left;white-space:normal}
+.cause{display:flex;align-items:center;gap:6px}
+.cause i{flex:none;width:9px;height:9px;border-radius:50%}
 q{display:block;font-style:italic;margin:4px 0}
 nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;align-items:center;gap:14px;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--bd)}
 nav button{background:var(--cd);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:6px 16px;font-size:15px;cursor:pointer;transition:transform .18s ease,background-color .18s ease}
@@ -98,25 +104,12 @@ nav button:active{transform:scale(.94)}
 </section>
 
 <section class="s">
-<div class="k">Lo realizado · decisiones clave</div>
-<h2>Siete decisiones que cambiaron las conclusiones</h2>
-<div class="g3">
-<div class="c"><b>Cancelados: 102 → 98 → 102</b><br><span class="mu">Al quitar duplicados bajaron a 98. Los 4 “activos” con fecha tenían 0 sesiones: se reclasificaron y se probó que la conclusión no cambia sin ellos.</span></div>
-<div class="c"><b>Precio de la promo validado</b><br><span class="mu">Los clientes a $9.900 tienen hasta 85 días; los de $29.900, desde 91. El cambio ocurre al día 90.</span></div>
-<div class="c"><b>Variable circular descartada</b><br><span class="mu">Las sesiones de los últimos 30 días son casi 0 en los cancelados por construcción. Tickets es un acumulado: no es efecto del soporte.</span></div>
-<div class="c"><b>Ventana de 60 días</b><br><span class="mu">Solo clientes con 60 días o más desde el registro (274), para que todos hayan tenido la misma oportunidad de cancelar.</span></div>
-<div class="c"><b>Tasa, no conteo</b><br><span class="mu">Más cancelaciones puede ser solo una base más grande. Se calculó la tasa sobre clientes en riesgo, con iOS como grupo de control.</span></div>
-<div class="c"><b>Se corrigió a la IA</b><br><span class="mu">Concluyó que la promo empeoró (≈35% vs 58%). Por cohorte: 52% vs 45%. Era volumen de registros, no deterioro.</span></div>
-</div>
-<div class="c"><b>Comentarios depurados:</b> 63 → 59 (2 duplicados, 1 spam, 1 ajeno al servicio). K048 tiene 5 estrellas pero es una queja con sarcasmo: se clasificó por contenido, no por estrellas.</div>
-</section>
-
-<section class="s">
 <div class="k">Hallazgo 1 · dónde se rompe</div>
 <h2>Dos picos: antes del día 60 en todos los canales y justo después del día 90 en la promo</h2>
 <div class="g2">
-<div class="c"><b>Cancelaciones por días desde el registro</b><svg id="c1" viewBox="0 0 420 230"></svg>
-<div class="lg"><span><i style="background:var(--g)"></i>Otros canales</span><span><i style="background:var(--y)"></i>Promo 3 meses</span></div></div>
+<div class="c"><b>Cancelaciones por días desde el registro</b><svg id="c1" viewBox="0 0 540 280"></svg>
+<div class="lg"><span><i style="background:var(--g)"></i>Orgánico</span><span><i style="background:var(--y)"></i>Promo 3 meses · Plan mensual</span><span><i style="background:#845ef7"></i>Promo 3 meses · Plan anual</span></div>
+<div class="mu">Los 72 registros de Promo 3 meses del archivo son de plan mensual; no hay registros de plan anual.</div></div>
 <div class="c"><b>Cancela en sus primeros 60 días</b><svg id="c2" viewBox="0 0 420 230"></svg>
 <div class="lg"><span>El 89% de las cancelaciones tempranas (34 de 38) no completó el onboarding</span></div></div></div>
 <div class="row"><div class="c"><div class="m">59%<small>de las cancelaciones, en los primeros 90 días</small></div></div>
@@ -144,10 +137,16 @@ nav button:active{transform:scale(.94)}
 <div class="g2">
 <div class="c"><b>Cancelaciones por mes, según causa</b><svg id="c4" viewBox="0 0 420 240"></svg>
 <div class="lg"><span><i style="background:var(--o)"></i>Onboarding</span><span><i style="background:var(--y)"></i>Fin de promo</span><span><i style="background:var(--b)"></i>Android</span><span><i style="background:var(--g)"></i>Otros</span></div></div>
-<div class="c"><b>Ingreso mensual perdido por causa</b>
-<div class="bar" style="margin:10px 0"><div style="width:41%;background:var(--o)">41%</div><div style="width:33%;background:var(--y)">33%</div><div style="width:22%;background:var(--b)">22%</div><div style="width:4%;background:var(--g)"></div></div>
-<div class="row"><div class="c"><div class="m">6,4 → 16<small>cancelaciones por mes</small></div></div><div class="c"><div class="m">×2,6<small>ritmo de ingreso perdido desde julio</small></div></div></div>
-<p class="mu" style="margin:8px 0 0">Antes de julio dominaba el onboarding. Desde julio se suman la promo y Android (42% de las cancelaciones).</p></div></div>
+<div class="c"><b>Cancelaciones e ingreso mensual perdido por causa</b>
+<table>
+<thead><tr><th scope="col">Causa</th><th scope="col">Cancelaciones</th><th scope="col">Ingreso perdido</th><th scope="col">% ingreso</th></tr></thead>
+<tbody>
+<tr><td><span class="cause"><i style="background:var(--o)"></i>Onboarding fallido</span></td><td>46</td><td>$1.055.400</td><td>41%</td></tr>
+<tr><td><span class="cause"><i style="background:var(--y)"></i>Fin de la promo</span></td><td>28</td><td>$837.200</td><td>33%</td></tr>
+<tr><td><span class="cause"><i style="background:var(--b)"></i>Android</span></td><td>22</td><td>$567.800</td><td>22%</td></tr>
+<tr><td><span class="cause"><i style="background:var(--g)"></i>Otros</span></td><td>3</td><td>$89.700</td><td>4%</td></tr>
+</tbody></table>
+</div></div>
 </section>
 
 <section class="s">
@@ -270,7 +269,7 @@ else{chart.fromSelect=addSelect('Desde',chart.labels.map((label,index)=>[label,S
 if(chart.series.length>1){const group=document.createElement('div');group.className='chart-series';const title=document.createElement('span');title.textContent='Series';group.append(title);chart.series.forEach((series,index)=>{const label=document.createElement('label'),input=document.createElement('input');input.type='checkbox';input.checked=true;input.addEventListener('change',()=>{if(!input.checked&&chart.series.length-chart.hidden.size===1){input.checked=true;return}if(input.checked)chart.hidden.delete(index);else chart.hidden.add(index);chart.type==='bars'?renderBars(chart):renderLine(chart)});label.append(input,document.createTextNode(series.name||chart.options.series[index]));group.append(label)});tools.append(group)}
 const reset=document.createElement('button');reset.type='button';reset.textContent='Restablecer';reset.addEventListener('click',()=>{chart.category=null;chart.from=0;chart.to=chart.labels.length-1;chart.hidden.clear();if(chart.categorySelect)chart.categorySelect.value='all';if(chart.fromSelect)chart.fromSelect.value='0';if(chart.toSelect)chart.toSelect.value=String(chart.to);tools.querySelectorAll('input[type="checkbox"]').forEach(input=>input.checked=true);chart.type==='bars'?renderBars(chart):renderLine(chart)});tools.append(reset);chart.el.before(tools)}
 function bars(id,labels,series,options={}){const chart={id,el:document.getElementById(id),type:'bars',labels,series,options,category:null,hidden:new Set()};renderBars(chart);addChartTools(chart)}
-function renderBars(chart){const {el,labels,series,options:o}=chart,W=420,H=o.h||230,p=28,indices=chart.category===null?labels.map((_,index)=>index):[chart.category],visible=series.map((item,index)=>({item,index})).filter(({index})=>!chart.hidden.has(index)),grouped=!!o.grouped,totals=indices.map(index=>visible.reduce((sum,{item})=>sum+item.d[index],0)),max=Math.max(1,...indices.map((index,position)=>grouped?Math.max(0,...visible.map(({item})=>item.d[index])):totals[position]))*1.15,bw=(W-2*p)/indices.length;let h='';
+function renderBars(chart){const {el,labels,series,options:o}=chart,W=o.w||420,H=o.h||230,p=28,indices=chart.category===null?labels.map((_,index)=>index):[chart.category],visible=series.map((item,index)=>({item,index})).filter(({index})=>!chart.hidden.has(index)),grouped=!!o.grouped,totals=indices.map(index=>visible.reduce((sum,{item})=>sum+item.d[index],0)),max=Math.max(1,...indices.map((index,position)=>grouped?Math.max(0,...visible.map(({item})=>item.d[index])):totals[position]))*1.15,bw=(W-2*p)/indices.length;let h='';
 indices.forEach((originalIndex,position)=>{let y=H-p;visible.forEach(({item,index},slot)=>{const value=item.d[originalIndex],height=value/max*(H-2*p-6),slotWidth=bw*.8/visible.length,barX=grouped?p+position*bw+bw*.1+slot*slotWidth+slotWidth*.11:p+position*bw+bw*.14,barWidth=grouped?slotWidth*.78:bw*.72;if(!grouped)y-=height;const barY=grouped?H-p-height:y,displayed=o.lab&&series.length===1?o.lab[originalIndex]:`${value}${o.unit||''}`,seriesName=o.series?.[index],tip=seriesName?`${labels[originalIndex]} · ${seriesName}: ${displayed}`:`${labels[originalIndex]}: ${displayed}`;h+=`<rect x="${barX}" y="${barY}" width="${barWidth}" height="${height}" fill="${o.cols?o.cols[originalIndex]:item.c}" rx="3" tabindex="0" role="img" aria-label="${tip}"><title>${tip}</title></rect>`;if(grouped)h+=`<text class="t" x="${barX+barWidth/2}" y="${barY-5}" text-anchor="middle">${value}</text>`});
 h+=`<text x="${p+position*bw+bw/2}" y="${H-10}" text-anchor="middle">${labels[originalIndex]}</text>${grouped?'':`<text class="t" x="${p+position*bw+bw/2}" y="${y-4}" text-anchor="middle">${o.lab?o.lab[originalIndex]:Math.round(totals[position]*10)/10}</text>`}`});
 el.innerHTML=h+`<line x1="${p}" x2="${W-p}" y1="${H-p}" y2="${H-p}" stroke="${V('--bd')}"/>`;animateChart(el)}
@@ -280,8 +279,8 @@ function renderLine(chart){const {el,labels,series,mark}=chart,W=420,H=240,p=30,
 indices.forEach((originalIndex,index)=>h+=`<text x="${X(index)}" y="${H-10}" text-anchor="middle">${labels[originalIndex]}</text>`);
 const markIndex=indices.indexOf(mark);if(markIndex>=0)h+=`<line x1="${X(markIndex)}" x2="${X(markIndex)}" y1="${p-8}" y2="${H-p}" stroke="${V('--mu')}" stroke-dasharray="4"/><text x="${X(markIndex)+3}" y="${p}">Julio</text>`;
 visible.forEach(seriesItem=>{const values=indices.map(index=>seriesItem.d[index]);if(values.length>1)h+=`<polyline fill="none" stroke="${seriesItem.c}" stroke-width="3" points="${values.map((value,index)=>X(index)+','+Y(value)).join(' ')}"/>`;h+=values.map((value,index)=>{const tip=`${labels[indices[index]]} · ${seriesItem.name}: ${value}%`;return `<circle cx="${X(index)}" cy="${Y(value)}" r="3.5" fill="${seriesItem.c}" tabindex="0" role="img" aria-label="${tip}"><title>${tip}</title></circle>`}).join('')});el.innerHTML=h;animateChart(el)}
-const O='#e8590c',Y='#f59f00',B='#1c7ed6',G='#9aa5b1';
-bars('c1',['0-30','31-60','61-90','91-120','121-180','181-365'],[{c:G,d:[9,21,9,3,6,4]},{c:Y,d:[4,9,6,23,4,1]}],{series:['Otros canales','Promo 3 meses']});
+const O='#e8590c',Y='#f59f00',B='#1c7ed6',G='#9aa5b1',P='#845ef7';
+bars('c1',['0-30','31-60','61-90','91-120','121-180','181-365'],[{c:G,d:[2,10,4,1,2,1]},{c:Y,d:[4,8,6,23,4,1]},{c:P,d:[0,0,0,0,0,0]}],{series:['Orgánico','Promo 3 meses · Plan mensual','Promo 3 meses · Plan anual'],grouped:true,w:540,h:280});
 bars('c2',['Sin onboarding','Con onboarding'],[{c:O,d:[35,2]}],{cols:[O,G],lab:['35% (n=97)','2% (n=177)']});
 line('c3',['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep'],[{c:B,name:'Android',d:[7.1,4.8,7.7,6.6,3.9,2.7,16.2,6.4,10.7]},{c:G,name:'iOS',d:[2.4,5.9,8.6,1.4,4.9,4.2,4.8,3.6,1.9]}],6);
 bars('c4',['Antes de julio','Desde julio'],[{c:O,d:[4.4,3.7]},{c:Y,d:[1.6,5]},{c:B,d:[0.3,6.7]},{c:G,d:[0.1,0.7]}],{series:['Onboarding','Fin de promo','Android','Otros'],grouped:true});

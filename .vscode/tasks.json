@@ -1,0 +1,37 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Inspect customer workbook data",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"-e",
+				"const fs=require('fs'),z=require('zlib'),b=fs.readFileSync('Pulso_clientes.xlsx'),sig=Buffer.from([0x50,0x4b,0x05,0x06]);let e=b.lastIndexOf(sig),n=b.readUInt16LE(e+10),p=b.readUInt32LE(e+16),files={};for(let i=0;i<n;i++){let nl=b.readUInt16LE(p+28),el=b.readUInt16LE(p+30),cl=b.readUInt16LE(p+32),name=b.toString('utf8',p+46,p+46+nl),size=b.readUInt32LE(p+20),off=b.readUInt32LE(p+42),m=b.readUInt16LE(p+10),ln=b.readUInt16LE(off+26),le=b.readUInt16LE(off+28),d=b.subarray(off+30+ln+le,off+30+ln+le+size);files[name]=m===8?z.inflateRawSync(d).toString():d.toString();p+=46+nl+el+cl}const ent=s=>s.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'\"').replace(/&apos;/g,\"'\");let ss=(files['xl/sharedStrings.xml']||'').match(/<si[ >][\\s\\S]*?<\\/si>/g)||[],strings=ss.map(x=>[...x.matchAll(/<t(?:\\s[^>]*)?>([\\s\\S]*?)<\\/t>/g)].map(m=>ent(m[1])).join(''));let xml=files['xl/worksheets/sheet1.xml'];for(let row of xml.match(/<row\\b[^>]*>[\\s\\S]*?<\\/row>/g)||[]){let cells=[];for(let m of row.matchAll(/<c\\b([^>]*)>([\\s\\S]*?)<\\/c>/g)){let ref=(m[1].match(/\\br=\"([^\"]+)/)||[])[1],type=(m[1].match(/\\bt=\"([^\"]+)/)||[])[1],v=(m[2].match(/<v>([\\s\\S]*?)<\\/v>/)||[])[1]||'',value=type==='s'?strings[+v]:type==='inlineStr'?ent((m[2].match(/<t[^>]*>([\\s\\S]*?)<\\/t>/)||[])[1]||''):ent(v);cells.push(ref+'='+value)}console.log(cells.join(' | '))}"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Extract customer workbook rows",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"-e",
+				"const fs=require('fs'),z=require('zlib'),b=fs.readFileSync('Pulso_clientes.xlsx'),sig=Buffer.from([0x50,0x4b,0x05,0x06]);let e=b.lastIndexOf(sig),n=b.readUInt16LE(e+10),p=b.readUInt32LE(e+16),files={};for(let i=0;i<n;i++){let nl=b.readUInt16LE(p+28),el=b.readUInt16LE(p+30),cl=b.readUInt16LE(p+32),name=b.toString('utf8',p+46,p+46+nl),size=b.readUInt32LE(p+20),off=b.readUInt32LE(p+42),m=b.readUInt16LE(p+10),ln=b.readUInt16LE(off+26),le=b.readUInt16LE(off+28),d=b.subarray(off+30+ln+le,off+30+ln+le+size);files[name]=m===8?z.inflateRawSync(d).toString():d.toString();p+=46+nl+el+cl}const ent=s=>s.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'\"').replace(/&apos;/g,\"'\");let ss=(files['xl/sharedStrings.xml']||'').match(/<si[ >][\\s\\S]*?<\\/si>/g)||[],strings=ss.map(x=>[...x.matchAll(/<t(?:\\s[^>]*)?>([\\s\\S]*?)<\\/t>/g)].map(m=>ent(m[1])).join(''));let out=[],xml=files['xl/worksheets/sheet1.xml'];for(let row of xml.match(/<row\\b[^>]*>[\\s\\S]*?<\\/row>/g)||[]){let cells=[];for(let m of row.matchAll(/<c\\b([^>]*)>([\\s\\S]*?)<\\/c>/g)){let ref=(m[1].match(/\\br=\"([^\"]+)/)||[])[1],type=(m[1].match(/\\bt=\"([^\"]+)/)||[])[1],v=(m[2].match(/<v>([\\s\\S]*?)<\\/v>/)||[])[1]||'',value=type==='s'?strings[+v]:type==='inlineStr'?ent((m[2].match(/<t[^>]*>([\\s\\S]*?)<\\/t>/)||[])[1]||''):ent(v);cells.push(ref+'='+value)}out.push(cells.join(' | '))}fs.writeFileSync('workbook_dump.txt',out.join('\\n'),'utf8')"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Extract workbook cells",
+			"type": "shell",
+			"command": "node",
+			"args": [
+				"inspect_xlsx_tmp.js"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		}
+	]
+}
